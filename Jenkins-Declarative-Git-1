@@ -1,10 +1,21 @@
 pipeline{
      agent any
-     stages{
-        stage("Git Checkout"){
-           steps{
-               git credentialsId: 'github', url: 'https://github.com/joepapson/mypipelineweb'
-      }
+     environment{
+               PATH="/opt/maven3/bin:$PATH"
     }
+     stages{
+
+        stage("Git Checkout"){
+
+           steps{
+
+               git credentialsId: 'github', url: 'https://github.com/joepapson/mypipelineweb'
+       }   
+     }
+        stage("Maven Build"){
+               steps{
+                      sh "mvn clean package"
+              }
+ }
    }
 }
